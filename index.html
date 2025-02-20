@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Function Javascript</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            text-align: center;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        .result {
+            background-color: #e0e0e0;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+        .template {
+            background-color: #e0f7fa;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Function Javascript</h1>
+
+    <!-- Diskon dan Harga Akhir -->
+    <div>
+        <h2>AeroStreet</h2>
+        <input type="number" id="harga" placeholder="Harga Produk (Rp)">
+        <input type="number" id="diskon" placeholder="Persen Diskon (%)">
+        <button onclick="hitungDiskon()">Hitung Diskon</button>
+        <div id="diskonResult" class="result"></div>
+    </div>
+
+    <!-- Konversi Suhu -->
+    <div>
+        <h2>Konversi Suhu</h2>
+        <input type="number" id="suhuInput" placeholder="Masukkan suhu">
+        <select id="fromSuhu">
+            <option value="C">Celcius</option>
+            <option value="K">Kelvin</option>
+            <option value="F">Fahrenheit</option>
+            <option value="R">Reamur</option>
+        </select>
+        <select id="toSuhu">
+            <option value="C">Celcius</option>
+            <option value="K">Kelvin</option>
+            <option value="F">Fahrenheit</option>
+            <option value="R">Reamur</option>
+        </select>
+        <button onclick="konversiSuhu()">Konversi Suhu</button>
+        <div id="suhuResult" class="result"></div>
+    </div>
+
+    <!-- Kalkulator -->
+    <div>
+        <h2>Kalkulator</h2>
+        <input type="number" id="angka1" placeholder="Angka 1">
+        <input type="number" id="angka2" placeholder="Angka 2">
+        <select id="operasi">
+            <option value="+">+</option>
+            <option value="-">-</option>
+            <option value="*">*</option>
+            <option value="/">/</option>
+        </select>
+        <button onclick="kalkulator()">Hitung</button>
+        <div id="kalkulatorResult" class="result"></div>
+    </div>
+
+    <!-- Template KTP -->
+    <div>
+        <h2>Template KTP</h2>
+        <input type="text" id="nama" placeholder="Nama">
+        <input type="text" id="nik" placeholder="NIK">
+        <input type="text" id="alamat" placeholder="Alamat">
+        <input type="text" id="tglLahir" placeholder="Tanggal Lahir">
+        <button onclick="tampilkanKTP()">Tampilkan KTP</button>
+        <div id="ktpResult" class="template"></div>
+    </div>
+</div>
+
+<script>
+    // Fungsi Hitung Diskon
+    function hitungDiskon() {
+        let harga = parseFloat(document.getElementById("harga").value);
+        let diskon = parseFloat(document.getElementById("diskon").value);
+        let diskonAmount = (harga * diskon) / 100;
+        let hargaAkhir = harga - diskonAmount;
+        document.getElementById("diskonResult").innerHTML = `
+            Diskon: Rp ${diskonAmount.toFixed(2)} <br>
+            Harga setelah diskon: Rp ${hargaAkhir.toFixed(2)}
+        `;
+    }
+
+    // Fungsi Konversi Suhu
+    function konversiSuhu() {
+        let suhu = parseFloat(document.getElementById("suhuInput").value);
+        let from = document.getElementById("fromSuhu").value;
+        let to = document.getElementById("toSuhu").value;
+        let hasil;
+
+        if (from === 'C') {
+            if (to === 'K') hasil = suhu + 273.15;
+            else if (to === 'F') hasil = (suhu * 9/5) + 32;
+            else if (to === 'R') hasil = suhu * 4/5;
+        } else if (from === 'K') {
+            if (to === 'C') hasil = suhu - 273.15;
+            else if (to === 'F') hasil = (suhu - 273.15) * 9/5 + 32;
+            else if (to === 'R') hasil = (suhu - 273.15) * 4/5;
+        } else if (from === 'F') {
+            if (to === 'C') hasil = (suhu - 32) * 5/9;
+            else if (to === 'K') hasil = (suhu - 32) * 5/9 + 273.15;
+            else if (to === 'R') hasil = (suhu - 32) * 4/9;
+        } else if (from === 'R') {
+            if (to === 'C') hasil = suhu * 5/4;
+            else if (to === 'K') hasil = (suhu * 5/4) + 273.15;
+            else if (to === 'F') hasil = (suhu * 9/4) + 32;
+        }
+        document.getElementById("suhuResult").innerHTML = `${suhu} ${from} = ${hasil.toFixed(2)} ${to}`;
+    }
+
+    // Fungsi Kalkulator
+    function kalkulator() {
+        let angka1 = parseFloat(document.getElementById("angka1").value);
+        let angka2 = parseFloat(document.getElementById("angka2").value);
+        let operasi = document.getElementById("operasi").value;
+        let hasil;
+
+        switch (operasi) {
+            case '+': hasil = angka1 + angka2; break;
+            case '-': hasil = angka1 - angka2; break;
+            case '*': hasil = angka1 * angka2; break;
+            case '/': hasil = angka1 / angka2; break;
+        }
+
+        document.getElementById("kalkulatorResult").innerHTML = `Hasil: ${hasil}`;
+    }
+
+    // Fungsi Template KTP
+    function tampilkanKTP() {
+        let nama = document.getElementById("nama").value;
+        let nik = document.getElementById("nik").value;
+        let alamat = document.getElementById("alamat").value;
+        let tglLahir = document.getElementById("tglLahir").value;
+
+        let ktpTemplate = `
+            <strong>Template KTP</strong><br>
+            Nama: ${nama} <br>
+            NIK: ${nik} <br>
+            Alamat: ${alamat} <br>
+            Tanggal Lahir: ${tglLahir}
+        `;
+        document.getElementById("ktpResult").innerHTML = ktpTemplate;
+    }
+</script>
+
+</body>
+</html>
